@@ -52,7 +52,7 @@ public class ProjectEntity {
         // Compare the data members and return accordingly
         return
                 id.equals(projectEntity.id) &&
-                title.equals(projectEntity.title);
+                        title.equals(projectEntity.title);
 
     }
 
