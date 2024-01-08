@@ -42,7 +42,6 @@ public class ProjectEntity {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-
         /* Check if o is an instance of Complex or not
           "null instanceof [type]" also returns false */
         ProjectEntity projectEntity = (ProjectEntity) o;
