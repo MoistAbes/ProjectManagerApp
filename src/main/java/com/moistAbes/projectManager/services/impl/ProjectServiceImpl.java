@@ -1,13 +1,11 @@
 package com.moistAbes.projectManager.services.impl;
 
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
+import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
 import com.moistAbes.projectManager.repositories.ProjectRepository;
 import com.moistAbes.projectManager.services.ProjectService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -29,8 +27,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Optional<ProjectEntity> getProject(Long id) {
-        return projectRepository.findById(id);
+    public ProjectEntity getProject(Long id) throws ProjectNotFoundException {
+        return projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
     }
 
     @Override
