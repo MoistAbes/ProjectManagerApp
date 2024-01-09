@@ -6,6 +6,9 @@ import com.moistAbes.projectManager.mappers.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class ProjectMapper implements Mapper<ProjectEntity, ProjectDto> {
 
@@ -23,5 +26,11 @@ public class ProjectMapper implements Mapper<ProjectEntity, ProjectDto> {
     @Override
     public ProjectEntity mapToEntity(ProjectDto projectDto) {
         return modelMapper.map(projectDto, ProjectEntity.class);
+    }
+
+    public List<ProjectDto> mapToDtoList(List<ProjectEntity> projectEntities){
+        return projectEntities.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 }

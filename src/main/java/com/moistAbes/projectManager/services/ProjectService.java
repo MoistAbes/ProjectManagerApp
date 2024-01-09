@@ -1,6 +1,7 @@
 package com.moistAbes.projectManager.services;
 
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
+import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface ProjectService {
 
     List<ProjectEntity> getProjects();
 
-    Optional<ProjectEntity> getProject(Long id);
+    ProjectEntity getProject(Long id) throws ProjectNotFoundException;
 
     boolean itExists(Long id);
 
