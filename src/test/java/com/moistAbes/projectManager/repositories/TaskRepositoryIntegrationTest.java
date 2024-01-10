@@ -1,6 +1,7 @@
 package com.moistAbes.projectManager.repositories;
 
 import com.moistAbes.projectManager.TestDataUtil;
+import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,30 +21,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TaskRepositoryIntegrationTest {
 
     private TaskRepository underTest;
+    private ProjectRepository projectRepository;
 
     @Autowired
-    public TaskRepositoryIntegrationTest(TaskRepository underTest) {
+    public TaskRepositoryIntegrationTest(TaskRepository underTest, ProjectRepository projectRepository) {
         this.underTest = underTest;
+        this.projectRepository = projectRepository;
     }
 
     @Test
     public void testThatTaskCanBeCreatedAndRecalled(){
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA();
-        TaskEntity savedTestTaskA = underTest.save(testTaskA);
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        ProjectEntity savedProject = projectRepository.save(testProject);
 
-        Optional<TaskEntity> result = underTest.findById(savedTestTaskA.getId());
+        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject);
+        TaskEntity savedTask = underTest.save(testTask);
+
+        Optional<TaskEntity> result = underTest.findById(savedTask.getId());
 
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(testTaskA);
+        assertThat(result.get()).isEqualTo(savedTask);
 
-        underTest.deleteById(savedTestTaskA.getId());
+        underTest.deleteById(savedTask.getId());
     }
 
     @Test
     public void testThatMultipleTasksCanBeCreatedAndRecalled(){
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA();
-        TaskEntity testTaskB = TestDataUtil.createTestTaskB();
-        TaskEntity testTaskC = TestDataUtil.createTestTaskC();
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject);
+        TaskEntity testTaskB = TestDataUtil.createTestTaskB(testProject);
+        TaskEntity testTaskC = TestDataUtil.createTestTaskC(testProject);
 
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
         TaskEntity savedTestTaskB = underTest.save(testTaskB);
@@ -67,7 +76,9 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testThatTaskCanBeUpdated(){
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA();
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject);
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
 
         savedTestTaskA.setTitle("UPDATED");
@@ -83,7 +94,9 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testThatTaskCanBeDeleted(){
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA();
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject);
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
 
         underTest.deleteById(savedTestTaskA.getId());

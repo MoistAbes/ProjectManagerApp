@@ -19,7 +19,7 @@ public class TaskDto {
     private String status;
     private String priority;
     private String progress;
-    private ProjectDto project;
+    private Long projectId;
     private LocalDate startDate;
     private LocalDate endDate;
 
