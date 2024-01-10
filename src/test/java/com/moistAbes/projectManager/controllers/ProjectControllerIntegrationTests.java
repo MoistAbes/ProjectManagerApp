@@ -1,6 +1,5 @@
 package com.moistAbes.projectManager.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moistAbes.projectManager.TestDataUtil;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
@@ -37,8 +36,7 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatCreateProjectSuccesfullyReturnsHttp201Created() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
         String projectJson = objectMapper.writeValueAsString(testProjectA);
 
         mockMvc.perform(
@@ -52,8 +50,7 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatCreateProjectSuccesfullyReturnsSavedProject() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
         String projectJson = objectMapper.writeValueAsString(testProjectA);
 
         mockMvc.perform(
@@ -80,8 +77,7 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatGetProjectSuccesfullyReturnsHttp200() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
         String projectJson = objectMapper.writeValueAsString(testProjectA);
 
         mockMvc.perform(
@@ -95,12 +91,12 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatCreateProjectSuccesfullyReturnsCorrectData() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
-        String projectJson = objectMapper.writeValueAsString(testProjectA);
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
+        ProjectEntity savedProject = projectService.saveProject(testProjectA);
+        String projectJson = objectMapper.writeValueAsString(savedProject);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/projects")
+                MockMvcRequestBuilders.get("/projects/" + savedProject.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(projectJson)
         ).andExpect(
@@ -113,9 +109,7 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatUpdateProjectSucesfullyReturnsHtpp200() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
-
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
         ProjectEntity savedProjectA = projectService.saveProject(testProjectA);
         savedProjectA.setTitle("Updated title");
 
@@ -132,9 +126,7 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatUpdateProjectSucesfullyReturnsCorrectData() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
-
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
         ProjectEntity savedProjectA = projectService.saveProject(testProjectA);
         savedProjectA.setTitle("Updated title");
 
@@ -153,10 +145,6 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatDeleteProjectUnsuccesfullyReturns204() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
-        ProjectEntity savedProject = projectService.saveProject(testProjectA);
-
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/projects/" + 999)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -167,8 +155,7 @@ public class ProjectControllerIntegrationTests {
 
     @Test
     public void testThatDeleteProjectSuccesfullyReturns200() throws Exception {
-        List<TaskEntity> testTaskListA = TestDataUtil.createTestTaskListA();
-        ProjectEntity testProjectA = TestDataUtil.createTestProjectA(testTaskListA);
+        ProjectEntity testProjectA = TestDataUtil.createTestProjectA();
         ProjectEntity savedProject = projectService.saveProject(testProjectA);
 
         mockMvc.perform(
