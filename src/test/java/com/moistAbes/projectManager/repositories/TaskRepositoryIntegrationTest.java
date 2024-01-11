@@ -3,6 +3,7 @@ package com.moistAbes.projectManager.repositories;
 import com.moistAbes.projectManager.TestDataUtil;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
+import com.moistAbes.projectManager.domain.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,11 +24,13 @@ public class TaskRepositoryIntegrationTest {
 
     private TaskRepository underTest;
     private ProjectRepository projectRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public TaskRepositoryIntegrationTest(TaskRepository underTest, ProjectRepository projectRepository) {
+    public TaskRepositoryIntegrationTest(TaskRepository underTest, ProjectRepository projectRepository, UserRepository userRepository) {
         this.underTest = underTest;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     @Test
@@ -104,6 +108,23 @@ public class TaskRepositoryIntegrationTest {
         Optional<TaskEntity> result = underTest.findById(savedTestTaskA.getId());
 
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void testThatAddUserWorksCorrectly(){
+
+        UserEntity savedUser = userRepository.save(TestDataUtil.createTestUserA());
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        ProjectEntity savedProject = projectRepository.save(testProject);
+
+        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject);
+        testTask.setUsers(List.of(savedUser));
+        TaskEntity savedTask = underTest.save(testTask);
+
+        System.out.println("USERS: " + savedTask.getUsers());
+        assertThat(savedTask.getUsers()).isNotEmpty();
+
+
     }
 
 }

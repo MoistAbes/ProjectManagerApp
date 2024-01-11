@@ -4,6 +4,7 @@ import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.dto.TaskDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
+import com.moistAbes.projectManager.domain.entity.UserEntity;
 import org.springframework.scheduling.config.Task;
 
 import javax.xml.crypto.Data;
@@ -12,6 +13,13 @@ import java.util.Date;
 import java.util.List;
 
 public class TestDataUtil {
+
+    public static UserEntity createTestUserA(){
+        return UserEntity.builder()
+                .name("Robert")
+                .surname("Moskow")
+                .build();
+    }
 
     public static ProjectEntity createTestProjectA(){
         return ProjectEntity.builder()

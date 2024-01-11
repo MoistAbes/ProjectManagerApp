@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +21,7 @@ public class TaskDto {
     private String priority;
     private String progress;
     private Long projectId;
+    private List<Long> users;
     private LocalDate startDate;
     private LocalDate endDate;
 

@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -30,13 +29,23 @@ public class TaskEntity {
     private String priority;
     @Column(name = "progress")
     private String progress;
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private ProjectEntity project;
     @Column(name = "startDate")
     private LocalDate startDate;
     @Column(name = "endDate")
     private LocalDate endDate;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private ProjectEntity project;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "users_tasks",
+            joinColumns = { @JoinColumn(name = "task_id", referencedColumnName = "id")},
+            inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id")}
+    )
+    @ToString.Exclude
+    private List<UserEntity> users = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

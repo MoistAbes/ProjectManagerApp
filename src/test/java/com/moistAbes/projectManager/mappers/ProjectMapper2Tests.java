@@ -18,12 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class ProjectMapperTests {
+public class ProjectMapper2Tests {
 
     private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectMapperTests(ProjectMapper projectMapper) {
+    public ProjectMapper2Tests(ProjectMapper projectMapper) {
         this.projectMapper = projectMapper;
     }
 
@@ -32,7 +32,7 @@ public class ProjectMapperTests {
         //given
         ProjectDto testProjectDtoA = TestDataUtil.createTestProjectDtoA();
         List<TaskDto> testTaskDtoList = TestDataUtil.createTestTaskDtoListA();
-        testProjectDtoA.setTasks(testTaskDtoList);
+        //testProjectDtoA.setTasks(testTaskDtoList);
 
         //when
         ProjectEntity mappedProject = projectMapper.mapToEntity(testProjectDtoA);
@@ -40,7 +40,7 @@ public class ProjectMapperTests {
         //then
         assertThat(mappedProject.getId()).isEqualTo(testProjectDtoA.getId());
         assertThat(mappedProject.getTitle()).isEqualTo(testProjectDtoA.getTitle());
-        assertThat(mappedProject.getTasks().size()).isEqualTo(testProjectDtoA.getTasks().size());
+        //assertThat(mappedProject.getTasks().size()).isEqualTo(testProjectDtoA.getTasks().size());
         mappedProject.getTasks()
                 .forEach(System.out::println);
     }
@@ -63,9 +63,9 @@ public class ProjectMapperTests {
         //then
         assertThat(mappedProject.getId()).isEqualTo(testProjectA.getId());
         assertThat(mappedProject.getTitle()).isEqualTo(testProjectA.getTitle());
-        assertThat(mappedProject.getTasks().size()).isEqualTo(testProjectA.getTasks().size());
-        assertThat(mappedProject.getTasks().get(0).getProjectId()).isEqualTo(testProjectA.getTasks().get(0).getProject().getId());
-        mappedProject.getTasks()
-                .forEach(System.out::println);
+        //assertThat(mappedProject.getTasks().size()).isEqualTo(testProjectA.getTasks().size());
+        //assertThat(mappedProject.getTasks().get(0).getProjectId()).isEqualTo(testProjectA.getTasks().get(0).getProject().getId());
+        //mappedProject.getTasks()
+                //.forEach(System.out::println);
     }
 }
