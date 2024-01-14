@@ -30,6 +30,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskEntity> getTasksWithProjectId(Long projectId) {
+        return taskRepository.findByProjectId(projectId);
+    }
+
+    @Override
     public TaskEntity getTask(Long id) throws TaskNotFoundException {
         return taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
     }

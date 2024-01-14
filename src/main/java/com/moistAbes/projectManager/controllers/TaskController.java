@@ -37,6 +37,12 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.mapToTaskDtoList(taskEntities));
     }
 
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<TaskDto>> getProjectTasks(@PathVariable Long projectId){
+        List<TaskEntity> taskEntities = taskService.getTasksWithProjectId(projectId);
+        return ResponseEntity.ok(taskMapper.mapToTaskDtoList(taskEntities));
+    }
+
     @PostMapping()
     public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) throws UserNotFoundException, ProjectNotFoundException {
         System.out.println("co nam tu przychodzi: " + taskDto.toString());
