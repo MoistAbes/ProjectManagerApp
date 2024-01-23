@@ -28,7 +28,5 @@ public class TaskDto {
     private List<Long> users;
     private LocalDate startDate;
     private LocalDate endDate;
-
-
-
+    private List<Long> dependentTasks;
 }

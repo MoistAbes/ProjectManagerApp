@@ -35,6 +35,25 @@ public class TaskEntity {
     @Column(name = "endDate")
     private LocalDate endDate;
 
+    @OneToMany(
+            targetEntity = TaskDependenciesEntity.class,
+            mappedBy = "task",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @ToString.Exclude
+    private List<TaskDependenciesEntity> tasks = new ArrayList<>();
+
+    @OneToMany(
+            targetEntity = TaskDependenciesEntity.class,
+            mappedBy = "task",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
+    )
+    @ToString.Exclude
+    private List<TaskDependenciesEntity> dependentTasks;
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     private ProjectEntity project;

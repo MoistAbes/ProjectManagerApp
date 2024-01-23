@@ -1,17 +1,24 @@
 package com.moistAbes.projectManager.mappersv2;
 
+import com.moistAbes.projectManager.domain.dto.TaskDependenciesDto;
 import com.moistAbes.projectManager.domain.dto.TaskDto;
 import com.moistAbes.projectManager.domain.dto.UserDto;
+import com.moistAbes.projectManager.domain.entity.TaskDependenciesEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
 import com.moistAbes.projectManager.repositories.ProjectRepository;
+import com.moistAbes.projectManager.repositories.TaskDependenciesRepository;
+import com.moistAbes.projectManager.repositories.TaskRepository;
 import com.moistAbes.projectManager.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,26 +27,32 @@ public class TaskMapper2 {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final TaskDependenciesRepository taskDependenciesRepository;
+    private final TaskRepository taskRepository;
+
+    private final TaskDependenciesMapper2 taskDependenciesMapper;
+
+    public TaskEntity mapToTaskEntity(TaskDto taskDto) throws ProjectNotFoundException {
 
 
-    public TaskEntity mapToTaskEntity(TaskDto taskDto) throws ProjectNotFoundException, UserNotFoundException {
-
-
-            return TaskEntity.builder()
-                    .id(taskDto.getId())
-                    .title(taskDto.getTitle())
-                    .content(taskDto.getContent())
-                    .status(taskDto.getStatus())
-                    .priority(taskDto.getPriority())
-                    .progress(taskDto.getProgress())
-                    .startDate(taskDto.getStartDate())
-                    .endDate(taskDto.getEndDate())
-                    .project(projectRepository.findById(taskDto.getProjectId()).orElseThrow(ProjectNotFoundException::new))
-                    .users(taskDto.getUsers().stream()
-                            .map(userId -> userRepository.findById(userId).orElseGet(null))
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList())
-                    ).build();
+        return TaskEntity.builder()
+                .id(taskDto.getId())
+                .title(taskDto.getTitle())
+                .content(taskDto.getContent())
+                .status(taskDto.getStatus())
+                .priority(taskDto.getPriority())
+                .progress(taskDto.getProgress())
+                .startDate(taskDto.getStartDate())
+                .endDate(taskDto.getEndDate())
+                .project(projectRepository.findById(taskDto.getProjectId()).orElseThrow(ProjectNotFoundException::new))
+                .users(taskDto.getUsers().stream()
+                        .map(userId -> userRepository.findById(userId).orElseGet(null))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()))
+                .dependentTasks(taskDto.getDependentTasks().stream()
+                        .map(dependentTaskId -> taskDependenciesMapper.mapToTaskDependenciesEntity(new TaskDependenciesDto(taskDto.getId(), dependentTaskId)))
+                        .collect(Collectors.toList()))
+                .build();
     }
 
 
@@ -58,7 +71,10 @@ public class TaskMapper2 {
                 .users(taskEntity.getUsers().stream()
                         .map(UserEntity::getId)
                         .collect(Collectors.toList())
-                ).build();
+                ).dependentTasks(taskEntity.getDependentTasks().stream()
+                        .map(taskDependenciesEntity -> taskDependenciesEntity.getDependentTask().getId())
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     public List<TaskDto> mapToTaskDtoList(List<TaskEntity> taskEntities){
