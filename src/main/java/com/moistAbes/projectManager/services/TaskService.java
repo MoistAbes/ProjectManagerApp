@@ -10,10 +10,14 @@ public interface TaskService {
     TaskEntity saveTask(TaskEntity taskEntity);
 
     List<TaskEntity> getTasks();
+    List<TaskEntity> getTasksWithProjectId(Long projectId);
+
 
     TaskEntity getTask(Long id) throws TaskNotFoundException;
 
     boolean itExists(Long id);
 
     void deleteTask(Long id);
+
+
 }

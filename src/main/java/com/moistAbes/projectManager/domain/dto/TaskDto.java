@@ -4,9 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NamedQuery;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+
+
 
 @Data
 @AllArgsConstructor
@@ -24,5 +28,5 @@ public class TaskDto {
     private List<Long> users;
     private LocalDate startDate;
     private LocalDate endDate;
-
+    private List<Long> dependentTasks;
 }
