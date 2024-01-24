@@ -2,6 +2,8 @@ package com.moistAbes.projectManager.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -42,6 +44,7 @@ public class TaskEntity {
             fetch = FetchType.LAZY
     )
     @ToString.Exclude
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<TaskDependenciesEntity> tasks = new ArrayList<>();
 
     @OneToMany(
@@ -51,6 +54,7 @@ public class TaskEntity {
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
     private List<TaskDependenciesEntity> dependentTasks;
 

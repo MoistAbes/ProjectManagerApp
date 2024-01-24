@@ -65,22 +65,6 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-//        System.out.println("Task dependencies taskdto: " + taskDto.getDependentTasks().size());
-//        List<Long> taskIdList = taskDependenciesService.getTaskDependenciesList().stream()
-//                .map(TaskDependenciesEntity::getDependentTask)
-//                .map(TaskEntity::getId)
-//                .collect(Collectors.toList());
-//        List<Long> taskDependencyIdList = taskDependenciesService.getTaskDependenciesList().stream()
-//                .map(TaskDependenciesEntity::getId)
-//                .collect(Collectors.toList());
-//
-//        for (int i = 0; i < taskIdList.size(); i++){
-//            System.out.println("task: " + taskIdList.get(i).toString());
-//            if (!taskDto.getDependentTasks().contains(taskIdList.get(i))){
-//                System.out.println("dzieje sie to: " + taskIdList.get(i));
-//                taskDependenciesService.deleteTaskDependencies(taskDependencyIdList.get(i));
-//            }
-//        }
 
         TaskEntity updatedTask = taskService.saveTask(taskMapper.mapToTaskEntity(taskDto));
 

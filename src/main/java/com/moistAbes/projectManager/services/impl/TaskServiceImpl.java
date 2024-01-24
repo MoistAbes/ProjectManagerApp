@@ -1,22 +1,23 @@
 package com.moistAbes.projectManager.services.impl;
 
-import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.exceptions.TaskNotFoundException;
+import com.moistAbes.projectManager.repositories.TaskDependenciesRepository;
 import com.moistAbes.projectManager.repositories.TaskRepository;
 import com.moistAbes.projectManager.services.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskDependenciesServiceImpl taskDependenciesService;
 
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, TaskDependenciesServiceImpl taskDependenciesService) {
         this.taskRepository = taskRepository;
+        this.taskDependenciesService = taskDependenciesService;
     }
 
     @Override
@@ -46,6 +47,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(Long id) {
+        taskDependenciesService.deleteTaskDependenciesByTaskId(id);
         taskRepository.deleteById(id);
     }
 }
