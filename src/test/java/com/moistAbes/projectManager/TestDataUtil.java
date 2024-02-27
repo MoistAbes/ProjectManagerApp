@@ -93,48 +93,90 @@ public class TestDataUtil {
         );
     }
 
-    public static TaskEntity createTestTaskA(ProjectEntity projectEntity){
+    public static TaskEntity createTestTaskA(ProjectEntity projectEntity, SectionEntity sectionEntity){
         return TaskEntity.builder()
-                .title("TaskTitleA")
+                .title("TaskTestTitleA")
                 .content("TaskContentA")
                 .priority("TaskPriorityA")
                 .progress("TaskProgressA")
                 .startDate(LocalDate.of(1987, 5, 3))
                 .endDate(LocalDate.of(1987, 5, 4))
                 .project(projectEntity)
+                .section(sectionEntity)
                 .build();
     }
 
-    public static TaskEntity createTestTaskB(ProjectEntity projectEntity){
+    public static TaskEntity createTestTaskB(ProjectEntity projectEntity, SectionEntity sectionEntity){
         return TaskEntity.builder()
-                .title("TaskTitleB")
+                .title("TaskTestTitleB")
                 .content("TaskContentB")
                 .priority("TaskPriorityB")
                 .progress("TaskProgressB")
                 .startDate(LocalDate.of(2001, 2, 12))
                 .endDate(LocalDate.of(2003, 2, 25))
                 .project(projectEntity)
+                .section(sectionEntity)
                 .build();
     }
 
-    public static TaskEntity createTestTaskC(ProjectEntity projectEntity){
+    public static TaskEntity createTestTaskC(ProjectEntity projectEntity, SectionEntity sectionEntity){
         return TaskEntity.builder()
-                .title("TaskTitleC")
+                .title("TaskTestTitleC")
                 .content("TaskContentC")
                 .priority("TaskPriorityC")
                 .progress("TaskProgressC")
                 .startDate(LocalDate.of(1995, 11, 5))
                 .endDate(LocalDate.of(1995, 12, 16))
                 .project(projectEntity)
+                .section(sectionEntity)
                 .build();
     }
 
-    public static List<TaskEntity> createTestTaskListA(ProjectEntity projectEntity){
+    public static List<TaskEntity> createTestTaskListA(ProjectEntity projectEntity, SectionEntity sectionEntity){
         return List.of(
-                createTestTaskA(projectEntity),
-                createTestTaskB(projectEntity),
-                createTestTaskC(projectEntity)
+                createTestTaskA(projectEntity, sectionEntity),
+                createTestTaskB(projectEntity, sectionEntity),
+                createTestTaskC(projectEntity, sectionEntity)
         );
+    }
+
+    public static TaskDto createTestTaskDtoA(Long projectId, Long sectionId){
+        return TaskDto.builder()
+                .title("TaskTestTitleA")
+                .content("TaskContentA")
+                .priority("TaskPriorityA")
+                .progress("TaskProgressA")
+                .startDate(LocalDate.of(1995, 11, 5))
+                .endDate(LocalDate.of(1995, 12, 16))
+                .projectId(projectId)
+                .sectionId(sectionId)
+                .build();
+    }
+
+    public static TaskDto createTestTaskDtoB(Long projectId, Long sectionId){
+        return TaskDto.builder()
+                .title("TaskTestTitleB")
+                .content("TaskContentB")
+                .priority("TaskPriorityB")
+                .progress("TaskProgressB")
+                .startDate(LocalDate.of(1995, 11, 5))
+                .endDate(LocalDate.of(1995, 12, 16))
+                .projectId(projectId)
+                .sectionId(sectionId)
+                .build();
+    }
+
+    public static TaskDto createTestTaskDtoC(Long projectId, Long sectionId){
+        return TaskDto.builder()
+                .title("TaskTestTitleC")
+                .content("TaskContentC")
+                .priority("TaskPriorityC")
+                .progress("TaskProgressC")
+                .startDate(LocalDate.of(1995, 11, 5))
+                .endDate(LocalDate.of(1995, 12, 16))
+                .projectId(projectId)
+                .sectionId(sectionId)
+                .build();
     }
 
     public static SectionEntity createSectionA(ProjectEntity projectEntity){
