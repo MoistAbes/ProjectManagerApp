@@ -21,7 +21,6 @@ public class TaskDto {
     private Long id;
     private String title;
     private String content;
-    private String status;
     private String priority;
     private String progress;
     private Long projectId;
@@ -29,4 +28,5 @@ public class TaskDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private List<Long> dependentTasks;
+    private Long sectionId;
 }

@@ -1,6 +1,7 @@
 package com.moistAbes.projectManager.errorHandler;
 
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
+import com.moistAbes.projectManager.exceptions.SectionNotFoundException;
 import com.moistAbes.projectManager.exceptions.TaskNotFoundException;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -24,5 +25,10 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException exception){
         return new ResponseEntity<>("User with given id doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SectionNotFoundException.class)
+    public ResponseEntity<Object> handleSectionNotFoundException(SectionNotFoundException exception){
+        return new ResponseEntity<>("Section with given id doesn't exist", HttpStatus.NOT_FOUND);
     }
 }

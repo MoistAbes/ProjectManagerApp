@@ -5,6 +5,7 @@ import com.moistAbes.projectManager.domain.dto.UserDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
+import com.moistAbes.projectManager.repositories.ProjectRepository;
 import com.moistAbes.projectManager.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,18 @@ import java.util.stream.Collectors;
 public class UserMapper2 {
 
     private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
 
     public UserEntity mapToUserEntity(final UserDto userDto){
         return UserEntity.builder()
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .surname(userDto.getSurname())
+                .projects(projectRepository.findAll().stream()
+                        .filter(project -> userDto.getProjectsId().contains(project.getId()))
+                        .collect(Collectors.toList()))
                 .build();
+
     }
 
     public UserDto mapToUserDto(final UserEntity userEntity) {
@@ -31,9 +37,9 @@ public class UserMapper2 {
                 .id(userEntity.getId())
                 .name(userEntity.getName())
                 .surname(userEntity.getSurname())
-//                .tasks(taskRepository.findByUserId(userEntity.getId()).stream()
-//                        .map(TaskEntity::getId)
-//                        .collect(Collectors.toList()))
+                .projectsId(userEntity.getProjects().stream()
+                        .map(ProjectEntity::getId)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
