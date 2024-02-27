@@ -26,8 +26,6 @@ public class TaskEntity {
     private String title;
     @Column(name = "content")
     private String content;
-    @Column(name = "status")
-    private String status;
     @Column(name = "priority")
     private String priority;
     @Column(name = "progress")
@@ -44,17 +42,14 @@ public class TaskEntity {
             fetch = FetchType.LAZY
     )
     @ToString.Exclude
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<TaskDependenciesEntity> tasks = new ArrayList<>();
 
     @OneToMany(
             targetEntity = TaskDependenciesEntity.class,
             mappedBy = "task",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true
+            fetch = FetchType.LAZY
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
     private List<TaskDependenciesEntity> dependentTasks;
 
@@ -62,7 +57,11 @@ public class TaskEntity {
     @JoinColumn(name = "project_id")
     private ProjectEntity project;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    @ManyToOne
+    @JoinColumn(name = "section_id")
+    private SectionEntity section;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "users_tasks",
             joinColumns = { @JoinColumn(name = "task_id", referencedColumnName = "id")},
@@ -81,7 +80,6 @@ public class TaskEntity {
         if (!id.equals(that.id)) return false;
         if (!Objects.equals(title, that.title)) return false;
         if (!Objects.equals(content, that.content)) return false;
-        if (!Objects.equals(status, that.status)) return false;
         if (!Objects.equals(priority, that.priority)) return false;
         if (!Objects.equals(progress, that.progress)) return false;
         if (!Objects.equals(startDate, that.startDate)) return false;
@@ -93,7 +91,6 @@ public class TaskEntity {
         int result = id.hashCode();
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         result = 31 * result + (progress != null ? progress.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);

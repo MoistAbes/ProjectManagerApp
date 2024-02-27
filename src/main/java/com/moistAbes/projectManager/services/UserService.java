@@ -11,6 +11,7 @@ public interface UserService {
     UserEntity getUser(Long id) throws UserNotFoundException;
     List<UserEntity> getUsers();
     boolean itExists(Long id);
+    void deleteUser(Long id);
 
 
 

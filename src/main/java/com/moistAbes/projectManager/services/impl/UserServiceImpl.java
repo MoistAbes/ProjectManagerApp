@@ -1,20 +1,25 @@
 package com.moistAbes.projectManager.services.impl;
 
+import com.moistAbes.projectManager.domain.dto.UserDto;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
+import com.moistAbes.projectManager.mappersv2.UserMapper2;
 import com.moistAbes.projectManager.repositories.UserRepository;
 import com.moistAbes.projectManager.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper2 userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper2 userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -32,8 +37,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    public List<UserDto> getUsersWithProjectId(Long projectId){
+        List<UserEntity> users = userRepository.findAll();
+
+        return users.stream()
+                .map(userMapper::mapToUserDto)
+                .filter(userDto -> userDto.getProjectsId().contains(projectId))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public boolean itExists(Long id) {
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,6 +26,10 @@ public class UserEntity {
     private String name;
     @Column(name = "surname")
     private String surname;
+
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     List<TaskEntity> tasks = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    List<ProjectEntity> projects = new ArrayList<>();
 }

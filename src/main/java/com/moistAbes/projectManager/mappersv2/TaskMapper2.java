@@ -7,11 +7,9 @@ import com.moistAbes.projectManager.domain.entity.TaskDependenciesEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
+import com.moistAbes.projectManager.exceptions.SectionNotFoundException;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
-import com.moistAbes.projectManager.repositories.ProjectRepository;
-import com.moistAbes.projectManager.repositories.TaskDependenciesRepository;
-import com.moistAbes.projectManager.repositories.TaskRepository;
-import com.moistAbes.projectManager.repositories.UserRepository;
+import com.moistAbes.projectManager.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,17 +27,17 @@ public class TaskMapper2 {
     private final UserRepository userRepository;
     private final TaskDependenciesRepository taskDependenciesRepository;
     private final TaskRepository taskRepository;
+    private final SectionRepository sectionRepository;
 
     private final TaskDependenciesMapper2 taskDependenciesMapper;
 
-    public TaskEntity mapToTaskEntity(TaskDto taskDto) throws ProjectNotFoundException {
+    public TaskEntity mapToTaskEntity(TaskDto taskDto) throws ProjectNotFoundException, SectionNotFoundException {
 
 
         return TaskEntity.builder()
                 .id(taskDto.getId())
                 .title(taskDto.getTitle())
                 .content(taskDto.getContent())
-                .status(taskDto.getStatus())
                 .priority(taskDto.getPriority())
                 .progress(taskDto.getProgress())
                 .startDate(taskDto.getStartDate())
@@ -52,6 +50,7 @@ public class TaskMapper2 {
                 .dependentTasks(taskDto.getDependentTasks().stream()
                         .map(dependentTaskId -> taskDependenciesMapper.mapToTaskDependenciesEntity(new TaskDependenciesDto(taskDto.getId(), dependentTaskId)))
                         .collect(Collectors.toList()))
+                .section(sectionRepository.findById(taskDto.getSectionId()).orElseThrow(SectionNotFoundException::new))
                 .build();
     }
 
@@ -62,7 +61,6 @@ public class TaskMapper2 {
                 .id(taskEntity.getId())
                 .title(taskEntity.getTitle())
                 .content(taskEntity.getContent())
-                .status(taskEntity.getStatus())
                 .priority(taskEntity.getPriority())
                 .progress(taskEntity.getProgress())
                 .startDate(taskEntity.getStartDate())
@@ -74,6 +72,7 @@ public class TaskMapper2 {
                 ).dependentTasks(taskEntity.getDependentTasks().stream()
                         .map(taskDependenciesEntity -> taskDependenciesEntity.getDependentTask().getId())
                         .collect(Collectors.toList()))
+                .sectionId(taskEntity.getSection().getId())
                 .build();
     }
 

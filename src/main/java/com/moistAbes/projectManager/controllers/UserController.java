@@ -1,6 +1,7 @@
 package com.moistAbes.projectManager.controllers;
 
 import com.moistAbes.projectManager.domain.dto.UserDto;
+import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
 import com.moistAbes.projectManager.mappersv2.UserMapper2;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -34,11 +36,31 @@ public class UserController {
         return ResponseEntity.ok(userMapper.mapToUserDto(user));
     }
 
+    @GetMapping(path = "/project/{projectId}")
+    public ResponseEntity<List<UserDto>> getUsersWithProjectId(@PathVariable Long projectId){
+        List<UserDto> users = userService.getUsersWithProjectId(projectId);
+        return ResponseEntity.ok(users);
+    }
+
     @PostMapping()
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         UserEntity user = userMapper.mapToUserEntity(userDto);
+        System.out.println("DZIALA TO?: " + user.getProjects());
         UserEntity savedUser = userService.saveUser(user);
         return new ResponseEntity<>(userMapper.mapToUserDto(savedUser), HttpStatus.CREATED);
+    }
+
+    @PutMapping()
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
+        if (!userService.itExists(userDto.getId())){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+        UserEntity updatedUser = userService.saveUser(userMapper.mapToUserEntity(userDto));
+
+
+        return ResponseEntity.ok(userMapper.mapToUserDto(updatedUser));
     }
 
 

@@ -1,8 +1,10 @@
 package com.moistAbes.projectManager;
 
 import com.moistAbes.projectManager.domain.dto.ProjectDto;
+import com.moistAbes.projectManager.domain.dto.SectionDto;
 import com.moistAbes.projectManager.domain.dto.TaskDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
+import com.moistAbes.projectManager.domain.entity.SectionEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import org.springframework.scheduling.config.Task;
@@ -52,7 +54,6 @@ public class TestDataUtil {
                 .title("TaskTitleA")
                 .content("TaskContentA")
                 .priority("TaskPriorityA")
-                .status("TestStatusA")
                 .progress("TaskProgressA")
                 .startDate(LocalDate.of(1987, 5, 3))
                 .endDate(LocalDate.of(1987, 5, 4))
@@ -65,7 +66,6 @@ public class TestDataUtil {
                 .title("TaskTitleB")
                 .content("TaskContentB")
                 .priority("TaskPriorityB")
-                .status("TestStatusB")
                 .progress("TaskProgressB")
                 .startDate(LocalDate.of(1987, 5, 3))
                 .endDate(LocalDate.of(1987, 5, 4))
@@ -78,7 +78,6 @@ public class TestDataUtil {
                 .title("TaskTitleC")
                 .content("TaskContentC")
                 .priority("TaskPriorityC")
-                .status("TestStatusC")
                 .progress("TaskProgressC")
                 .startDate(LocalDate.of(1987, 5, 3))
                 .endDate(LocalDate.of(1987, 5, 4))
@@ -99,7 +98,6 @@ public class TestDataUtil {
                 .title("TaskTitleA")
                 .content("TaskContentA")
                 .priority("TaskPriorityA")
-                .status("TestStatusA")
                 .progress("TaskProgressA")
                 .startDate(LocalDate.of(1987, 5, 3))
                 .endDate(LocalDate.of(1987, 5, 4))
@@ -112,7 +110,6 @@ public class TestDataUtil {
                 .title("TaskTitleB")
                 .content("TaskContentB")
                 .priority("TaskPriorityB")
-                .status("TestStatusB")
                 .progress("TaskProgressB")
                 .startDate(LocalDate.of(2001, 2, 12))
                 .endDate(LocalDate.of(2003, 2, 25))
@@ -125,7 +122,6 @@ public class TestDataUtil {
                 .title("TaskTitleC")
                 .content("TaskContentC")
                 .priority("TaskPriorityC")
-                .status("TestStatusC")
                 .progress("TaskProgressC")
                 .startDate(LocalDate.of(1995, 11, 5))
                 .endDate(LocalDate.of(1995, 12, 16))
@@ -139,5 +135,31 @@ public class TestDataUtil {
                 createTestTaskB(projectEntity),
                 createTestTaskC(projectEntity)
         );
+    }
+
+    public static SectionEntity createSectionA(ProjectEntity projectEntity){
+        return SectionEntity.builder()
+                .name("Test section A")
+                .project(projectEntity)
+                .build();
+    }
+    public static SectionEntity createSectionB(ProjectEntity projectEntity){
+        return SectionEntity.builder()
+                .name("Test section B")
+                .project(projectEntity)
+                .build();
+    }
+    public static SectionEntity createSectionC(ProjectEntity projectEntity){
+        return SectionEntity.builder()
+                .name("Test section C")
+                .project(projectEntity)
+                .build();
+    }
+
+    public static SectionDto createDtoSectionA(Long projectId){
+        return SectionDto.builder()
+                .name("Test section A")
+                .projectId(projectId)
+                .build();
     }
 }

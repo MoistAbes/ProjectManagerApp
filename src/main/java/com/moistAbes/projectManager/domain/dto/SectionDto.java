@@ -5,18 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class SectionDto {
 
     private Long id;
     private String name;
-    private String surname;
-    private List<Long> tasks;
-    private List<Long> projectsId;
-
+    private Long projectId;
 }

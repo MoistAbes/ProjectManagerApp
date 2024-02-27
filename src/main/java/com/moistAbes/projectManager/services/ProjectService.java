@@ -2,10 +2,7 @@ package com.moistAbes.projectManager.services;
 
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 public interface ProjectService {
     ProjectEntity saveProject(ProjectEntity projectEntity);

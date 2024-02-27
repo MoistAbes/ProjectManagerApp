@@ -33,6 +33,23 @@ public class ProjectEntity {
     @ToString.Exclude
     private List<TaskEntity> tasks = new ArrayList<>();
 
+    @OneToMany(
+            targetEntity = SectionEntity.class,
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @ToString.Exclude
+    private List<SectionEntity> sections = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "users_projects",
+            joinColumns = {@JoinColumn(name = "users_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id", referencedColumnName = "id")}
+    )
+    private List<UserEntity> users = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         // If the object is compared with itself then return true

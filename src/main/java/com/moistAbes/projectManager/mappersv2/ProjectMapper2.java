@@ -2,7 +2,10 @@ package com.moistAbes.projectManager.mappersv2;
 
 import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
+import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
+import com.moistAbes.projectManager.repositories.SectionRepository;
+import com.moistAbes.projectManager.repositories.UserRepository;
 import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,19 +17,33 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectMapper2 {
 
+    private final SectionRepository sectionRepository;
+    private final UserRepository userRepository;
+
     public ProjectEntity mapToProjectEntity(final ProjectDto projectDto){
+
+        System.out.println("TESCIK PROJECT DTO: " + projectDto);
 
         return ProjectEntity.builder()
                 .id(projectDto.getId())
                 .title(projectDto.getTitle())
+                .users(userRepository.findAll().stream()
+                        .filter(user -> projectDto.getUsersId().contains(user.getId()))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
     public ProjectDto mapToProjectDto(final ProjectEntity projectEntity) {
 
-        return  ProjectDto.builder()
+        System.out.println("TESCIK PROJECT ENTITY: " + projectEntity);
+
+
+        return ProjectDto.builder()
                 .id(projectEntity.getId())
                 .title(projectEntity.getTitle())
+                .usersId(projectEntity.getUsers().stream()
+                        .map(UserEntity::getId)
+                        .collect(Collectors.toList()))
                 .build();
     }
 

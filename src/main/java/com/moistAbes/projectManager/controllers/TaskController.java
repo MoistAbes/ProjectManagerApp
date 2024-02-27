@@ -3,6 +3,7 @@ package com.moistAbes.projectManager.controllers;
 import com.moistAbes.projectManager.domain.dto.TaskDto;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
+import com.moistAbes.projectManager.exceptions.SectionNotFoundException;
 import com.moistAbes.projectManager.exceptions.TaskNotFoundException;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
 import com.moistAbes.projectManager.mappersv2.TaskDependenciesMapper2;
@@ -31,13 +32,6 @@ public class TaskController {
     @GetMapping(path = "/{taskId}")
     public ResponseEntity<TaskDto> getTask(@PathVariable Long taskId) throws TaskNotFoundException {
         TaskEntity taskEntity = taskService.getTask(taskId);
-//        List<TaskDependenciesEntity> taskDependenciesEntities = taskDependenciesService.getTaskDependenciesList();
-//
-//        List<TaskDependenciesEntity> resultList = taskDependenciesEntities.stream()
-//                .filter(taskDependenciesEntity -> taskDependenciesEntity.getTask().getId().equals(taskEntity.getId()))
-//                .collect(Collectors.toList());
-//
-//        taskEntity.setDependentTasks(resultList);
         return ResponseEntity.ok(taskMapper.mapToTaskDto(taskEntity));
     }
 
@@ -54,25 +48,18 @@ public class TaskController {
     }
 
     @PostMapping()
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) throws UserNotFoundException, ProjectNotFoundException {
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) throws UserNotFoundException, ProjectNotFoundException, SectionNotFoundException {
         TaskEntity savedTask = taskService.saveTask(taskMapper.mapToTaskEntity(taskDto));
         return new ResponseEntity<>(taskMapper.mapToTaskDto(savedTask), HttpStatus.CREATED);
     }
 
     @PutMapping()
-    public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto) throws UserNotFoundException, ProjectNotFoundException {
+    public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto) throws ProjectNotFoundException, SectionNotFoundException {
         if (!taskService.itExists(taskDto.getId())){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
         TaskEntity updatedTask = taskService.saveTask(taskMapper.mapToTaskEntity(taskDto));
-
-        System.out.println("Task dependencies saved task: " + updatedTask.getDependentTasks().size());
-
         return ResponseEntity.ok(taskMapper.mapToTaskDto(updatedTask));
-
-
     }
 
     @DeleteMapping(path = "/{taskId}")
