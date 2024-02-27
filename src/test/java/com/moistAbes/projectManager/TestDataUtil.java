@@ -3,6 +3,7 @@ package com.moistAbes.projectManager;
 import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.dto.SectionDto;
 import com.moistAbes.projectManager.domain.dto.TaskDto;
+import com.moistAbes.projectManager.domain.dto.UserDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.SectionEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
@@ -18,8 +19,31 @@ public class TestDataUtil {
 
     public static UserEntity createTestUserA(){
         return UserEntity.builder()
-                .name("Robert")
-                .surname("Moskow")
+                .name("Test user name A")
+                .surname("Test user surname A")
+                .projects(List.of())
+                .build();
+    }
+
+    public static UserEntity createTestUserB(){
+        return UserEntity.builder()
+                .name("Test user name B")
+                .surname("Test user surname B")
+                .build();
+    }
+
+    public static UserEntity createTestUserC(){
+        return UserEntity.builder()
+                .name("Test user name C")
+                .surname("Test user surname C")
+                .build();
+    }
+
+    public static UserDto createTestUserDtoA(){
+        return UserDto.builder()
+                .name("Test user name A")
+                .surname("Test user surname A")
+                .projectsId(List.of())
                 .build();
     }
 
