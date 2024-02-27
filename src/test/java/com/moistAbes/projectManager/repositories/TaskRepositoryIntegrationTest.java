@@ -2,8 +2,10 @@ package com.moistAbes.projectManager.repositories;
 
 import com.moistAbes.projectManager.TestDataUtil;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
+import com.moistAbes.projectManager.domain.entity.SectionEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
+import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +24,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TaskRepositoryIntegrationTest {
 
-    private TaskRepository underTest;
-    private ProjectRepository projectRepository;
     private UserRepository userRepository;
+    private ProjectRepository projectRepository;
+    private SectionRepository sectionRepository;
+    private TaskRepository underTest;
 
     @Autowired
-    public TaskRepositoryIntegrationTest(TaskRepository underTest, ProjectRepository projectRepository, UserRepository userRepository) {
+    public TaskRepositoryIntegrationTest(TaskRepository underTest, ProjectRepository projectRepository, UserRepository userRepository, SectionRepository sectionRepository) {
         this.underTest = underTest;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.sectionRepository = sectionRepository;
     }
 
     @Test
     public void testThatTaskCanBeCreatedAndRecalled(){
+        UserEntity testUser = TestDataUtil.createTestUserA();
+        UserEntity savedUser = userRepository.save(testUser);
+
         ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        testProject.setUsers(List.of(savedUser));
         ProjectEntity savedProject = projectRepository.save(testProject);
 
-        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject);
+        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
+        SectionEntity savedSection = sectionRepository.save(testSection);
+
+        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject, savedSection);
         TaskEntity savedTask = underTest.save(testTask);
 
         Optional<TaskEntity> result = underTest.findById(savedTask.getId());
@@ -51,11 +62,19 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testThatMultipleTasksCanBeCreatedAndRecalled(){
-        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        UserEntity testUser = TestDataUtil.createTestUserA();
+        UserEntity savedUser = userRepository.save(testUser);
 
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject);
-        TaskEntity testTaskB = TestDataUtil.createTestTaskB(testProject);
-        TaskEntity testTaskC = TestDataUtil.createTestTaskC(testProject);
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        testProject.setUsers(List.of(savedUser));
+        ProjectEntity savedProject = projectRepository.save(testProject);
+
+        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
+        SectionEntity savedSection = sectionRepository.save(testSection);
+
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject, savedSection);
+        TaskEntity testTaskB = TestDataUtil.createTestTaskB(testProject, savedSection);
+        TaskEntity testTaskC = TestDataUtil.createTestTaskC(testProject, savedSection);
 
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
         TaskEntity savedTestTaskB = underTest.save(testTaskB);
@@ -80,9 +99,17 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testThatTaskCanBeUpdated(){
-        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        UserEntity testUser = TestDataUtil.createTestUserA();
+        UserEntity savedUser = userRepository.save(testUser);
 
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject);
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        testProject.setUsers(List.of(savedUser));
+        ProjectEntity savedProject = projectRepository.save(testProject);
+
+        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
+        SectionEntity savedSection = sectionRepository.save(testSection);
+
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject, savedSection);
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
 
         savedTestTaskA.setTitle("UPDATED");
@@ -98,9 +125,17 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testThatTaskCanBeDeleted(){
-        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        UserEntity testUser = TestDataUtil.createTestUserA();
+        UserEntity savedUser = userRepository.save(testUser);
 
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject);
+        ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        testProject.setUsers(List.of(savedUser));
+        ProjectEntity savedProject = projectRepository.save(testProject);
+
+        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
+        SectionEntity savedSection = sectionRepository.save(testSection);
+
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject, savedSection);
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
 
         underTest.deleteById(savedTestTaskA.getId());
@@ -113,11 +148,17 @@ public class TaskRepositoryIntegrationTest {
     @Test
     public void testThatAddUserWorksCorrectly(){
 
-        UserEntity savedUser = userRepository.save(TestDataUtil.createTestUserA());
+        UserEntity testUser = TestDataUtil.createTestUserA();
+        UserEntity savedUser = userRepository.save(testUser);
+
         ProjectEntity testProject = TestDataUtil.createTestProjectA();
+        testProject.setUsers(List.of(savedUser));
         ProjectEntity savedProject = projectRepository.save(testProject);
 
-        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject);
+        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
+        SectionEntity savedSection = sectionRepository.save(testSection);
+
+        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject, savedSection);
         testTask.setUsers(List.of(savedUser));
         TaskEntity savedTask = underTest.save(testTask);
 

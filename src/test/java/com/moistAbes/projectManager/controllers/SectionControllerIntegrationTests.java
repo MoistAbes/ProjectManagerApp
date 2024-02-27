@@ -30,7 +30,7 @@ import java.util.List;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-public class SectionControllerIntegrationTest {
+public class SectionControllerIntegrationTests {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
@@ -40,7 +40,7 @@ public class SectionControllerIntegrationTest {
     private ProjectServiceImpl projectService;
 
     @Autowired
-    public SectionControllerIntegrationTest(MockMvc mockMvc, SectionServiceImpl sectionService, UserServiceImpl userService, ProjectServiceImpl projectService, ObjectMapper objectMapper, SectionMapper sectionMapper) {
+    public SectionControllerIntegrationTests(MockMvc mockMvc, SectionServiceImpl sectionService, UserServiceImpl userService, ProjectServiceImpl projectService, ObjectMapper objectMapper, SectionMapper sectionMapper) {
         this.mockMvc = mockMvc;
         this.sectionService = sectionService;
         this.userService = userService;
