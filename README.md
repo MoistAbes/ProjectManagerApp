@@ -25,7 +25,7 @@
     Comprehensive project management application designed to enhance your team's productivity and collaboration. With a user-friendly interface and powerful features, our application integrates the flexibility of Kanban-style boards, the clarity of Gantt charts, and insightful task and user charts to provide a seamless project management experience.
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/github_username/repo_name">View Demo(not working yet)</a>
     ·
     <a href="https://github.com/MoistAbes/ProjectManagerApp-Backend/issues">Report Bug</a>
     ·
@@ -66,13 +66,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -118,9 +112,7 @@ To get a local copy up and running follow these simple example steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+Not done yet
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -129,12 +121,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Add user creation 
+- [ ] Add Login/Logout feature
+- [ ] Add more charts
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/MoistAbes/ProjectManagerApp-Backend/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -170,20 +161,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Sebastian Szymłowski - sebastian.szymlowski@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Project Link: [https://github.com/MoistAbes/ProjectManagerApp-Backend](https://github.com/MoistAbes/ProjectManagerApp-Backend)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
