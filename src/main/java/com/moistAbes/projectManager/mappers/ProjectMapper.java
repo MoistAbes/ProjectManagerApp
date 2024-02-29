@@ -1,12 +1,10 @@
-package com.moistAbes.projectManager.mappersv2;
+package com.moistAbes.projectManager.mappers;
 
 import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
-import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
 import com.moistAbes.projectManager.repositories.SectionRepository;
 import com.moistAbes.projectManager.repositories.UserRepository;
-import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectMapper2 {
+public class ProjectMapper {
 
     private final SectionRepository sectionRepository;
     private final UserRepository userRepository;

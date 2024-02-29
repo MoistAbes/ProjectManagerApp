@@ -1,4 +1,4 @@
-package com.moistAbes.projectManager.mappersv2;
+package com.moistAbes.projectManager.mappers;
 
 import com.moistAbes.projectManager.domain.dto.SectionDto;
 import com.moistAbes.projectManager.domain.entity.SectionEntity;

@@ -3,8 +3,7 @@ package com.moistAbes.projectManager.controllers;
 import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
-import com.moistAbes.projectManager.mappers.impl.ProjectMapper;
-import com.moistAbes.projectManager.mappersv2.ProjectMapper2;
+import com.moistAbes.projectManager.mappers.ProjectMapper;
 import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectServiceImpl projectService;
-    private final ProjectMapper2 projectMapper;
+    private final ProjectMapper projectMapper;
 
 
     @GetMapping(path = "/{projectId}")

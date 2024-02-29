@@ -1,6 +1,5 @@
 package com.moistAbes.projectManager.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moistAbes.projectManager.TestDataUtil;
@@ -9,7 +8,7 @@ import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.SectionEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
-import com.moistAbes.projectManager.mappersv2.TaskMapper2;
+import com.moistAbes.projectManager.mappers.TaskMapper;
 import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import com.moistAbes.projectManager.services.impl.SectionServiceImpl;
 import com.moistAbes.projectManager.services.impl.TaskServiceImpl;
@@ -38,7 +37,7 @@ public class TaskControllerIntegrationTests {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
-    private TaskMapper2 taskMapper;
+    private TaskMapper taskMapper;
     private UserServiceImpl userService;
     private ProjectServiceImpl projectService;
     private SectionServiceImpl sectionService;
@@ -48,7 +47,7 @@ public class TaskControllerIntegrationTests {
     public TaskControllerIntegrationTests(
             MockMvc mockMvc,
             ObjectMapper objectMapper,
-            TaskMapper2 taskMapper,
+            TaskMapper taskMapper,
             UserServiceImpl userService,
             ProjectServiceImpl projectService,
             SectionServiceImpl sectionService,

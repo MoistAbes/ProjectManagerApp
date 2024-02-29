@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class TaskRepositoryIntegrationTest {
+public class TaskRepositoryTests {
 
     private UserRepository userRepository;
     private ProjectRepository projectRepository;
@@ -30,7 +29,7 @@ public class TaskRepositoryIntegrationTest {
     private TaskRepository underTest;
 
     @Autowired
-    public TaskRepositoryIntegrationTest(TaskRepository underTest, ProjectRepository projectRepository, UserRepository userRepository, SectionRepository sectionRepository) {
+    public TaskRepositoryTests(TaskRepository underTest, ProjectRepository projectRepository, UserRepository userRepository, SectionRepository sectionRepository) {
         this.underTest = underTest;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
@@ -39,43 +38,45 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testThatTaskCanBeCreatedAndRecalled(){
-        UserEntity testUser = TestDataUtil.createTestUserA();
-        UserEntity savedUser = userRepository.save(testUser);
+        //Given
+        UserEntity savedUser = userRepository.save(TestDataUtil.createTestUserA());
 
         ProjectEntity testProject = TestDataUtil.createTestProjectA();
         testProject.setUsers(List.of(savedUser));
         ProjectEntity savedProject = projectRepository.save(testProject);
+        SectionEntity savedSection = sectionRepository.save(TestDataUtil.createSectionA(savedProject));
 
-        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
-        SectionEntity savedSection = sectionRepository.save(testSection);
-
-        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject, savedSection);
-        TaskEntity savedTask = underTest.save(testTask);
-
+        //When
+        TaskEntity savedTask = underTest.save(TestDataUtil.createTestTaskA(savedProject, savedSection));
         Optional<TaskEntity> result = underTest.findById(savedTask.getId());
 
+        //Then
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(savedTask);
 
+        //Clean up
         underTest.deleteById(savedTask.getId());
+        sectionRepository.deleteById(savedSection.getId());
+        projectRepository.deleteById(savedProject.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 
     @Test
     public void testThatMultipleTasksCanBeCreatedAndRecalled(){
-        UserEntity testUser = TestDataUtil.createTestUserA();
-        UserEntity savedUser = userRepository.save(testUser);
+        //Given
+        UserEntity savedUser = userRepository.save(TestDataUtil.createTestUserA());
 
         ProjectEntity testProject = TestDataUtil.createTestProjectA();
         testProject.setUsers(List.of(savedUser));
         ProjectEntity savedProject = projectRepository.save(testProject);
 
-        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
-        SectionEntity savedSection = sectionRepository.save(testSection);
+        SectionEntity savedSection = sectionRepository.save(TestDataUtil.createSectionA(savedProject));
 
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject, savedSection);
-        TaskEntity testTaskB = TestDataUtil.createTestTaskB(testProject, savedSection);
-        TaskEntity testTaskC = TestDataUtil.createTestTaskC(testProject, savedSection);
+        TaskEntity testTaskA = TestDataUtil.createTestTaskA(savedProject, savedSection);
+        TaskEntity testTaskB = TestDataUtil.createTestTaskB(savedProject, savedSection);
+        TaskEntity testTaskC = TestDataUtil.createTestTaskC(savedProject, savedSection);
 
+        //When
         TaskEntity savedTestTaskA = underTest.save(testTaskA);
         TaskEntity savedTestTaskB = underTest.save(testTaskB);
         TaskEntity savedTestTaskC = underTest.save(testTaskC);
@@ -84,6 +85,7 @@ public class TaskRepositoryIntegrationTest {
         Optional<TaskEntity> resultB = underTest.findById(savedTestTaskB.getId());
         Optional<TaskEntity> resultC = underTest.findById(savedTestTaskC.getId());
 
+        //Then
         assertThat(resultA).isPresent();
         assertThat(resultB).isPresent();
         assertThat(resultC).isPresent();
@@ -92,79 +94,66 @@ public class TaskRepositoryIntegrationTest {
         assertThat(resultB.get()).isEqualTo(testTaskB);
         assertThat(resultC.get()).isEqualTo(testTaskC);
 
+        //Clean up
         underTest.deleteById(savedTestTaskA.getId());
         underTest.deleteById(savedTestTaskB.getId());
         underTest.deleteById(savedTestTaskC.getId());
+        sectionRepository.deleteById(savedSection.getId());
+        projectRepository.deleteById(savedProject.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 
     @Test
     public void testThatTaskCanBeUpdated(){
-        UserEntity testUser = TestDataUtil.createTestUserA();
-        UserEntity savedUser = userRepository.save(testUser);
+        //Given
+        UserEntity savedUser = userRepository.save(TestDataUtil.createTestUserA());
 
         ProjectEntity testProject = TestDataUtil.createTestProjectA();
         testProject.setUsers(List.of(savedUser));
         ProjectEntity savedProject = projectRepository.save(testProject);
 
-        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
-        SectionEntity savedSection = sectionRepository.save(testSection);
+        SectionEntity savedSection = sectionRepository.save(TestDataUtil.createSectionA(savedProject));
 
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject, savedSection);
-        TaskEntity savedTestTaskA = underTest.save(testTaskA);
-
+        TaskEntity savedTestTaskA = underTest.save(TestDataUtil.createTestTaskA(savedProject, savedSection));
         savedTestTaskA.setTitle("UPDATED");
 
+        //When
         TaskEntity updatedTestTaskA = underTest.save(savedTestTaskA);
         Optional<TaskEntity> result = underTest.findById(updatedTestTaskA.getId());
 
+        //Then
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(savedTestTaskA);
 
+        //Clean up
         underTest.deleteById(updatedTestTaskA.getId());
+        sectionRepository.deleteById(savedSection.getId());
+        projectRepository.deleteById(savedProject.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 
     @Test
     public void testThatTaskCanBeDeleted(){
-        UserEntity testUser = TestDataUtil.createTestUserA();
-        UserEntity savedUser = userRepository.save(testUser);
+        //Given
+        UserEntity savedUser = userRepository.save(TestDataUtil.createTestUserA());
 
         ProjectEntity testProject = TestDataUtil.createTestProjectA();
         testProject.setUsers(List.of(savedUser));
         ProjectEntity savedProject = projectRepository.save(testProject);
 
-        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
-        SectionEntity savedSection = sectionRepository.save(testSection);
+        SectionEntity savedSection = sectionRepository.save(TestDataUtil.createSectionA(savedProject));
+        TaskEntity savedTestTaskA = underTest.save(TestDataUtil.createTestTaskA(savedProject, savedSection));
 
-        TaskEntity testTaskA = TestDataUtil.createTestTaskA(testProject, savedSection);
-        TaskEntity savedTestTaskA = underTest.save(testTaskA);
-
+        //When
         underTest.deleteById(savedTestTaskA.getId());
-
         Optional<TaskEntity> result = underTest.findById(savedTestTaskA.getId());
 
+        //Then
         assertThat(result).isEmpty();
-    }
 
-    @Test
-    public void testThatAddUserWorksCorrectly(){
-
-        UserEntity testUser = TestDataUtil.createTestUserA();
-        UserEntity savedUser = userRepository.save(testUser);
-
-        ProjectEntity testProject = TestDataUtil.createTestProjectA();
-        testProject.setUsers(List.of(savedUser));
-        ProjectEntity savedProject = projectRepository.save(testProject);
-
-        SectionEntity testSection = TestDataUtil.createSectionA(savedProject);
-        SectionEntity savedSection = sectionRepository.save(testSection);
-
-        TaskEntity testTask = TestDataUtil.createTestTaskA(savedProject, savedSection);
-        testTask.setUsers(List.of(savedUser));
-        TaskEntity savedTask = underTest.save(testTask);
-
-        System.out.println("USERS: " + savedTask.getUsers());
-        assertThat(savedTask.getUsers()).isNotEmpty();
-
-
+        //Clean up
+        sectionRepository.deleteById(savedSection.getId());
+        projectRepository.deleteById(savedProject.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 }

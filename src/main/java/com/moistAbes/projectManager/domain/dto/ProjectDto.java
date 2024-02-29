@@ -15,7 +15,5 @@ public class ProjectDto {
 
     private Long id;
     private String title;
-    //private List<TaskDto> tasks;
-    //private List<String> sections;
     private List<Long> usersId;
 }

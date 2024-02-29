@@ -1,21 +1,18 @@
-package com.moistAbes.projectManager.mappersv2;
+package com.moistAbes.projectManager.mappers;
 
-import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.dto.UserDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
-import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.repositories.ProjectRepository;
 import com.moistAbes.projectManager.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserMapper2 {
+public class UserMapper {
 
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;

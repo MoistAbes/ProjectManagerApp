@@ -29,6 +29,7 @@ public class TestDataUtil {
         return UserEntity.builder()
                 .name("Test user name B")
                 .surname("Test user surname B")
+                .projects(List.of())
                 .build();
     }
 
@@ -36,6 +37,7 @@ public class TestDataUtil {
         return UserEntity.builder()
                 .name("Test user name C")
                 .surname("Test user surname C")
+                .projects(List.of())
                 .build();
     }
 
@@ -69,6 +71,7 @@ public class TestDataUtil {
     public static ProjectDto createTestProjectDtoA(){
         return ProjectDto.builder()
                 .id(123L)
+                .usersId(List.of())
                 .title("Test title")
                 .build();
     }
