@@ -164,6 +164,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 Sebastian Szymłowski - sebastian.szymlowski@gmail.com
 
 Project Backend Link: [https://github.com/MoistAbes/ProjectManagerApp-Backend](https://github.com/MoistAbes/ProjectManagerApp-Backend)
+
 Project Frontend Link: [https://github.com/MoistAbes/ProjectManagerApp-Frontend](https://github.com/MoistAbes/ProjectManagerApp-Frontend)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
