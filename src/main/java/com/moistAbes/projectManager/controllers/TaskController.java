@@ -6,8 +6,8 @@ import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
 import com.moistAbes.projectManager.exceptions.SectionNotFoundException;
 import com.moistAbes.projectManager.exceptions.TaskNotFoundException;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
-import com.moistAbes.projectManager.mappersv2.TaskDependenciesMapper2;
-import com.moistAbes.projectManager.mappersv2.TaskMapper2;
+import com.moistAbes.projectManager.mappers.TaskDependenciesMapper;
+import com.moistAbes.projectManager.mappers.TaskMapper;
 import com.moistAbes.projectManager.services.impl.TaskDependenciesServiceImpl;
 import com.moistAbes.projectManager.services.impl.TaskServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ public class TaskController {
 
     private final TaskServiceImpl taskService;
     private final TaskDependenciesServiceImpl taskDependenciesService;
-    private final TaskDependenciesMapper2 taskDependenciesMapper;
-    private final TaskMapper2 taskMapper;
+    private final TaskDependenciesMapper taskDependenciesMapper;
+    private final TaskMapper taskMapper;
 
     @GetMapping(path = "/{taskId}")
     public ResponseEntity<TaskDto> getTask(@PathVariable Long taskId) throws TaskNotFoundException {

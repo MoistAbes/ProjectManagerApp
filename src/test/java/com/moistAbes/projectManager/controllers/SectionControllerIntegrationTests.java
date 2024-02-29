@@ -1,6 +1,5 @@
 package com.moistAbes.projectManager.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moistAbes.projectManager.TestDataUtil;
@@ -8,7 +7,7 @@ import com.moistAbes.projectManager.domain.dto.SectionDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.SectionEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
-import com.moistAbes.projectManager.mappersv2.SectionMapper;
+import com.moistAbes.projectManager.mappers.SectionMapper;
 import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import com.moistAbes.projectManager.services.impl.SectionServiceImpl;
 import com.moistAbes.projectManager.services.impl.UserServiceImpl;

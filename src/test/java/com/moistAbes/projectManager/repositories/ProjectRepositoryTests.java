@@ -17,34 +17,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ProjectRepositoryIntegrationTest {
+public class ProjectRepositoryTests {
 
-    private ProjectRepository underTest;
+    private final ProjectRepository underTest;
 
     @Autowired
-    public ProjectRepositoryIntegrationTest(ProjectRepository underTest) {
+    public ProjectRepositoryTests(ProjectRepository underTest) {
         this.underTest = underTest;
     }
 
     @Test
     public void testThatProjectCanBeCreatedAndRecalled(){
+        //Given
         ProjectEntity projectEntityA = TestDataUtil.createTestProjectA();
+
+        //When
         ProjectEntity savedProjectEntity = underTest.save(projectEntityA);
         projectEntityA.setId(savedProjectEntity.getId());
         Optional<ProjectEntity> result = underTest.findById(savedProjectEntity.getId());
 
+        //Then
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(projectEntityA);
 
+        //Clean up
         underTest.deleteById(savedProjectEntity.getId());
     }
 
     @Test
     public void testThatMultipleProjectCanBeCreatedAndRecalled(){
+        //Given
         ProjectEntity projectEntityA = TestDataUtil.createTestProjectA();
         ProjectEntity projectEntityB = TestDataUtil.createTestProjectB();
         ProjectEntity projectEntityC = TestDataUtil.createTestProjectC();
 
+        //When
         ProjectEntity savedProjectEntityA = underTest.save(projectEntityA);
         ProjectEntity savedProjectEntityB = underTest.save(projectEntityB);
         ProjectEntity savedProjectEntityC = underTest.save(projectEntityC);
@@ -57,6 +64,7 @@ public class ProjectRepositoryIntegrationTest {
         Optional<ProjectEntity> resultB = underTest.findById(savedProjectEntityB.getId());
         Optional<ProjectEntity> resultC = underTest.findById(savedProjectEntityC.getId());
 
+        //Then
         assertThat(resultA).isPresent();
         assertThat(resultB).isPresent();
         assertThat(resultC).isPresent();
@@ -65,6 +73,7 @@ public class ProjectRepositoryIntegrationTest {
         assertThat(resultB.get()).isEqualTo(projectEntityB);
         assertThat(resultC.get()).isEqualTo(projectEntityC);
 
+        //Clean up
         underTest.deleteById(savedProjectEntityA.getId());
         underTest.deleteById(savedProjectEntityB.getId());
         underTest.deleteById(savedProjectEntityC.getId());
@@ -72,27 +81,36 @@ public class ProjectRepositoryIntegrationTest {
 
     @Test
     public void testThatProjectCanBeUpdated(){
+        //Given
         ProjectEntity projectEntityA = TestDataUtil.createTestProjectA();
         ProjectEntity savedProject = underTest.save(projectEntityA);
         savedProject.setTitle("UPDATED");
-        ProjectEntity updatedProjectEntity = underTest.save(savedProject);
 
+        //When
+        ProjectEntity updatedProjectEntity = underTest.save(savedProject);
         Optional<ProjectEntity> result = underTest.findById(updatedProjectEntity.getId());
 
+        //Then
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(savedProject);
 
+        //Clean up
         underTest.deleteById(updatedProjectEntity.getId());
     }
 
     @Test
     public void testThatProjectCanBeDeleted(){
+        //Given
         ProjectEntity projectEntityA = TestDataUtil.createTestProjectA();
         ProjectEntity savedProjectEntity = underTest.save(projectEntityA);
-        underTest.deleteById(savedProjectEntity.getId());
 
+        //When
+        underTest.deleteById(savedProjectEntity.getId());
         Optional<ProjectEntity> result = underTest.findById(savedProjectEntity.getId());
 
+        //Then
         assertThat(result).isEmpty();
+
+        //Clean up
     }
 }

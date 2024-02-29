@@ -1,27 +1,22 @@
-package com.moistAbes.projectManager.mappersv2;
+package com.moistAbes.projectManager.mappers;
 
 import com.moistAbes.projectManager.domain.dto.TaskDependenciesDto;
 import com.moistAbes.projectManager.domain.dto.TaskDto;
-import com.moistAbes.projectManager.domain.dto.UserDto;
-import com.moistAbes.projectManager.domain.entity.TaskDependenciesEntity;
 import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
 import com.moistAbes.projectManager.exceptions.SectionNotFoundException;
-import com.moistAbes.projectManager.exceptions.UserNotFoundException;
 import com.moistAbes.projectManager.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TaskMapper2 {
+public class TaskMapper {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
@@ -29,7 +24,7 @@ public class TaskMapper2 {
     private final TaskRepository taskRepository;
     private final SectionRepository sectionRepository;
 
-    private final TaskDependenciesMapper2 taskDependenciesMapper;
+    private final TaskDependenciesMapper taskDependenciesMapper;
 
     public TaskEntity mapToTaskEntity(TaskDto taskDto) throws ProjectNotFoundException, SectionNotFoundException {
 

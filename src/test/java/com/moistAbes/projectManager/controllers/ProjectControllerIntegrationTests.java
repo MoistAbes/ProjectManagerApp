@@ -6,14 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moistAbes.projectManager.TestDataUtil;
 import com.moistAbes.projectManager.domain.dto.ProjectDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
-import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
-import com.moistAbes.projectManager.exceptions.ProjectNotFoundException;
-import com.moistAbes.projectManager.mappersv2.ProjectMapper2;
+import com.moistAbes.projectManager.mappers.ProjectMapper;
 import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import com.moistAbes.projectManager.services.impl.UserServiceImpl;
-import jakarta.transaction.Transactional;
-import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -39,10 +34,10 @@ public class ProjectControllerIntegrationTests {
     private ProjectServiceImpl projectService;
     private UserServiceImpl userService;
     private ObjectMapper objectMapper;
-    private ProjectMapper2 projectMapper;
+    private ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectControllerIntegrationTests(MockMvc mockMvc, ProjectServiceImpl projectService, ObjectMapper objectMapper, UserServiceImpl userService, ProjectMapper2 projectMapper) {
+    public ProjectControllerIntegrationTests(MockMvc mockMvc, ProjectServiceImpl projectService, ObjectMapper objectMapper, UserServiceImpl userService, ProjectMapper projectMapper) {
         this.mockMvc = mockMvc;
         this.projectService = projectService;
         this.objectMapper = objectMapper;

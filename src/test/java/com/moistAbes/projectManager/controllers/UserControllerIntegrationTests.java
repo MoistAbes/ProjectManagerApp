@@ -6,7 +6,7 @@ import com.moistAbes.projectManager.TestDataUtil;
 import com.moistAbes.projectManager.domain.dto.UserDto;
 import com.moistAbes.projectManager.domain.entity.ProjectEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
-import com.moistAbes.projectManager.mappersv2.UserMapper2;
+import com.moistAbes.projectManager.mappers.UserMapper;
 import com.moistAbes.projectManager.services.impl.ProjectServiceImpl;
 import com.moistAbes.projectManager.services.impl.UserServiceImpl;
 import org.hamcrest.Matchers;
@@ -33,12 +33,12 @@ public class UserControllerIntegrationTests {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
-    private UserMapper2 userMapper;
+    private UserMapper userMapper;
     private UserServiceImpl userService;
     private ProjectServiceImpl projectService;
 
     @Autowired
-    public UserControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, UserMapper2 userMapper, UserServiceImpl userService, ProjectServiceImpl projectService) {
+    public UserControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, UserMapper userMapper, UserServiceImpl userService, ProjectServiceImpl projectService) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
         this.userMapper = userMapper;

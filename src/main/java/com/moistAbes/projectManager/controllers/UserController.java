@@ -1,10 +1,9 @@
 package com.moistAbes.projectManager.controllers;
 
 import com.moistAbes.projectManager.domain.dto.UserDto;
-import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
-import com.moistAbes.projectManager.mappersv2.UserMapper2;
+import com.moistAbes.projectManager.mappers.UserMapper;
 import com.moistAbes.projectManager.services.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -21,7 +19,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserServiceImpl userService;
-    private final UserMapper2 userMapper;
+    private final UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers(){

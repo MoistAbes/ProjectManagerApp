@@ -2,9 +2,8 @@ package com.moistAbes.projectManager.controllers;
 
 import com.moistAbes.projectManager.domain.dto.SectionDto;
 import com.moistAbes.projectManager.domain.entity.SectionEntity;
-import com.moistAbes.projectManager.domain.entity.TaskEntity;
 import com.moistAbes.projectManager.exceptions.SectionNotFoundException;
-import com.moistAbes.projectManager.mappersv2.SectionMapper;
+import com.moistAbes.projectManager.mappers.SectionMapper;
 import com.moistAbes.projectManager.services.impl.SectionServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

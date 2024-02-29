@@ -3,7 +3,7 @@ package com.moistAbes.projectManager.services.impl;
 import com.moistAbes.projectManager.domain.dto.UserDto;
 import com.moistAbes.projectManager.domain.entity.UserEntity;
 import com.moistAbes.projectManager.exceptions.UserNotFoundException;
-import com.moistAbes.projectManager.mappersv2.UserMapper2;
+import com.moistAbes.projectManager.mappers.UserMapper;
 import com.moistAbes.projectManager.repositories.UserRepository;
 import com.moistAbes.projectManager.services.UserService;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserMapper2 userMapper;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper2 userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
